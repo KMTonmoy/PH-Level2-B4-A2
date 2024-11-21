@@ -40,8 +40,8 @@ const getAllBicycles = async (req: Request, res: Response) => {
 
 const getSingleBicycle = async (req: Request, res: Response) => {
   try {
-    const { bicycleId } = req.params;
-    const result = await BicycleServices.getSingleBicycleFromDB(bicycleId);
+    const { _id } = req.params;
+    const result = await BicycleServices.getSingleBicycleFromDB(_id);
 
     if (!result) {
       return res.status(404).json({

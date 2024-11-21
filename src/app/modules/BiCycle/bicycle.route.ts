@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/products', bicycleControllers.createBicycle);
 router.get('/products', bicycleControllers.getAllBicycles);
-router.get('/products/:productId', bicycleControllers.getSingleBicycle);
+router.get('/products/:_id', bicycleControllers.getSingleBicycle);
 
 router.use((err, req, res, next) => {
     console.error(err);
