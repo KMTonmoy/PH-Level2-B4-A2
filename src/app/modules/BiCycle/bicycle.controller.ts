@@ -91,9 +91,29 @@ const updateBicycle = async (req: Request, res: Response) => {
   }
 };
 
+const deleteBicycle = async (req: Request, res: Response) => {
+  try {
+    const { _id } = req.params;
+    const result = await BicycleServices.deleteBicycleFromDB(_id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle deleted successfully',
+      data: {},
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: `${err}`,
+    });
+  }
+};
+
 export const bicycleControllers = {
   createBicycle,
   getAllBicycles,
   getSingleBicycle,
   updateBicycle,
+  deleteBicycle,
 };
