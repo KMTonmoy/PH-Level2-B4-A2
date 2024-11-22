@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { BicycleServices } from './bicycle.service';
- 
+
 const createBicycle = async (req: Request, res: Response) => {
   try {
     const bicycleData = req.body;
@@ -64,8 +64,36 @@ const getSingleBicycle = async (req: Request, res: Response) => {
   }
 };
 
+const updateBicycle = async (req: Request, res: Response) => {
+  try {
+    const { _id } = req.params;
+    const updatedData = req.body;
+    const result = await BicycleServices.updateBicycleInDB(_id, updatedData);
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: 'Bicycle not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle updated successfully',
+      data: result,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update bicycle',
+    });
+  }
+};
+
 export const bicycleControllers = {
   createBicycle,
   getAllBicycles,
   getSingleBicycle,
+  updateBicycle,
 };

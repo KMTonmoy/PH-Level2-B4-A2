@@ -34,8 +34,27 @@ const getSingleBicycleFromDB = async (id: string) => {
   }
 };
 
+const updateBicycleInDB = async (id: string, updatedData: Partial<Bicycle>) => {
+  try {
+    const result = await BicycleModel.findByIdAndUpdate(
+      id,
+      { $set: updatedData },
+      { new: true, runValidators: true }
+    );
+
+    if (!result) {
+      throw new Error('Bicycle not found');
+    }
+    return result;
+  } catch (err) {
+    console.error(`Error updating bicycle with id ${id}:`, err);
+    throw new Error('Failed to update bicycle');
+  }
+};
+
 export const BicycleServices = {
   createBicycleIntoDB,
   getAllBicyclesFromDB,
   getSingleBicycleFromDB,
+  updateBicycleInDB,
 };
