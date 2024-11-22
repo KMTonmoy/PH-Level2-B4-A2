@@ -5,29 +5,32 @@ const bicycleSchema = new Schema<Bicycle>(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, 'Bicycle name is required'],
     },
     brand: {
       type: String,
-      required: true,
+      required: [true, 'Brand is required'],
     },
     price: {
       type: Number,
-      required: true,
+      required: [true, 'Price is required'],
       min: [0, 'Price must be a positive number'],
     },
     type: {
       type: String,
-      enum: ['Mountain', 'Road', 'Hybrid', 'BMX', 'Electric'],
-      required: true,
+      enum: {
+        values: ['Mountain', 'Road', 'Hybrid', 'BMX', 'Electric'],
+        message: 'Type must be one of Mountain, Road, Hybrid, BMX, or Electric',
+      },
+      required: [true, 'Bicycle type is required'],
     },
     description: {
       type: String,
-      required: true,
+      required: [true, 'Description is required'],
     },
     quantity: {
       type: Number,
-      required: true,
+      required: [true, 'Quantity is required'],
       min: [0, 'Quantity cannot be negative'],
     },
     inStock: {
