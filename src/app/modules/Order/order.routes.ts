@@ -7,3 +7,4 @@ router.post('/orders', orderControllers.orderBicycle);
 router.get('/orders/revenue', orderControllers.calculateTotalRevenue);
 
 export const OrderRoutes = router;
+
