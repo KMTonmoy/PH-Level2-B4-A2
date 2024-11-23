@@ -45,7 +45,7 @@ Find the source code here: [GitHub Repository](replace-with-your-repo-link)
 
 ## 📂 Set up the environment variables
 
-1. MONGO_URI=<your-mongodb-connection-URI>
+1. MONGO_URI= Your MongoDB URI
 2. PORT= 5000
 
 ## 🏃‍➡️ Start the server
