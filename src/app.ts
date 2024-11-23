@@ -15,7 +15,7 @@ app.use('/api', BicycleRoutes);
 app.use('/api', OrderRoutes);
 
 app.get('/', (req: Request, res: Response) => {
-    res.send(`Bi-Cycle Store Running On Port ${config.port}`);
+    res.send(`Bi-Cycle Store Running Here !!!`);
 });
 
 export default app;
