@@ -4,5 +4,6 @@ export interface Payment {
     currency: string;
     paymentMethodId: string;
     status: string;
-  }
-  
+    orderedProducts: string[];
+
+}
