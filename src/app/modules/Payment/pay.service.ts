@@ -1,31 +1,29 @@
-import { PaymentDocument, PaymentModel } from "./pay.model";
+import Stripe from 'stripe';
+import PaymentModel from './pay.model';
+import { Payment } from './pay.interface';
 
- 
-export const PaymentServices = {
-    // Save a new payment to the database
-    async createPayment(paymentData: {
-        email: string;
-        productIds: string[];
-        amount: number;
-        transactionId: string;
-    }): Promise<PaymentDocument> {
-        try {
-            const payment = new PaymentModel(paymentData);
-            return await payment.save();
-        } catch (err) {
-            console.error('Error creating payment:', err);
-            throw new Error('Failed to create payment');
-        }
-    },
 
-    // Retrieve payment details by transaction ID
-    async getPaymentByTransactionId(transactionId: string): Promise<PaymentDocument | null> {
-        try {
-            const payment = await PaymentModel.findOne({ transactionId });
-            return payment;
-        } catch (err) {
-            console.error('Error retrieving payment:', err);
-            throw new Error('Failed to retrieve payment');
-        }
-    },
+const stripe = new Stripe("sk_test_51PLRDh1ER2eQQaKO62FDISx1JSEYIssRAxTTkCbDLF9dwtr65GpWuRQNbx7WTOCRLEqIH8TH7oyPWDiDeiembWQp00Lbh4F97W", { apiVersion: '2022-11-15' });
+
+export const createPaymentIntent = async (price: number) => {
+    const amount = Math.round(price * 100);
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency: 'usd',
+        payment_method_types: ['card'],
+    });
+    return paymentIntent.client_secret;
+};
+
+export const getAllPayments = async () => {
+    return await PaymentModel.find();
+};
+
+export const getPaymentsByEmail = async (email: string) => {
+    return await PaymentModel.find({ email });
+};
+
+export const createPayment = async (payment: Payment) => {
+    const newPayment = new PaymentModel(payment);
+    return await newPayment.save();
 };

@@ -1,10 +1,18 @@
 import express from 'express';
-import { payController } from './pay.controller';
-  
+import { createPaymentController, createPaymentIntentController, getAllPaymentsController, getPaymentsByEmailController } from './pay.controller';
+
+ 
 const router = express.Router();
 
-router.post('/payments', payController.createPayment);
+router.post('/create-payment-intent', createPaymentIntentController);
+router.get('/payments', getAllPaymentsController);
+router.get('/payments/:email', getPaymentsByEmailController);
+router.post('/payments', createPaymentController);
 
-router.get('/payments/:transactionId', payController.getPaymentByTransactionId);
 
-export const PaymentRoutes = router;
+ 
+
+
+
+
+export const PayRoutes = router;
