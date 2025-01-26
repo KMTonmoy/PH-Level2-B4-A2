@@ -7,15 +7,24 @@ const bicycleSchema = new Schema<Bicycle>(
       type: String,
       required: [true, 'Bicycle name is required'],
     },
+    image: {
+      type: String,
+      required: [true, 'Bicycle image is required'],
+    },
     brand: {
       type: String,
       required: [true, 'Brand is required'],
+    },
+    model: {
+      type: String,
+      required: [true, 'model is required'],
     },
     price: {
       type: Number,
       required: [true, 'Price is required'],
       min: [0, 'Price must be a positive number'],
     },
+ 
     type: {
       type: String,
       enum: {

@@ -5,6 +5,8 @@ export type Bicycle = {
     name: string;
     brand: string;
     price: number;
+    image: string;
+    model: string;
     type: BicycleType;
     description: string;
     quantity: number;
