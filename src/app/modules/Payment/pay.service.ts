@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 import PaymentModel from './pay.model';
 import { Payment } from './pay.interface';
 
-const stripe = new Stripe("sk_test_51PLRDh1ER2eQQaKO62FDISx1JSEYIssRAxTTkCbDLF9dwtr65GpWuRQNbx7WTOCRLEqIH8TH7oyPWDiDeiembWQp00Lbh4F97W", { apiVersion: '2022-11-15' });
+const stripe = new Stripe("sk_test_51PLRDh1ER2eQQaKO62FDISx1JSEYIssRAxTTkCbDLF9dwtr65GpWuRQNbx7WTOCRLEqIH8TH7oyPWDiDeiembWQp00Lbh4F97W", {});
 
 export const createPaymentIntent = async (price: number) => {
     const amount = Math.round(price * 100);

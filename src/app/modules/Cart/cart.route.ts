@@ -7,7 +7,6 @@ router.get('/mycartall', cartContorller.getCartAll);
 router.post('/mycart', cartContorller.addProductToMyCart);
 router.put('/mycart/:_id', cartContorller.updateProductInMyCart);
 router.delete('/mycart/:_id', cartContorller.removeProductFromMyCart);
-router.delete('/mycart/:_id', cartContorller.removeProductFromMyCart);
 
 router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error(err);

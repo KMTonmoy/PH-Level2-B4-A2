@@ -34,29 +34,68 @@ const getCartByUserEmail = async (req: Request, res: Response) => {
 
 
 
+// const addProductToMyCart = async (req: Request, res: Response) => {
 
+//   const { email, productId, productprice, productimage, productName, productType, productModel, quantity } = req.body;
 
+//   const existingProduct = await CartProductModel.findOne({ email, productId, productprice, productimage, productName, productType, productModel, quantity });
 
+//   if (existingProduct) {
+//     return res.status(400).json({ success: false, message: 'Product already in cart' });
+//   }
+
+//   const newCartProduct = new CartProductModel({
+//     email, productId, productprice, productimage, productName, productType, productModel, quantity
+//   });
+
+//   await newCartProduct.save();
+//   res.status(201).json({ success: true, message: 'Product added to cart', data: newCartProduct });
+
+// };
 
 
 const addProductToMyCart = async (req: Request, res: Response) => {
-
   const { email, productId, productprice, productimage, productName, productType, productModel, quantity } = req.body;
 
-  const existingProduct = await CartProductModel.findOne({ email, productId, productprice, productimage, productName, productType, productModel, quantity });
+  const existingProduct = await CartProductModel.findOne({ email, productId });
 
   if (existingProduct) {
-    return res.status(400).json({ success: false, message: 'Product already in cart' });
+    existingProduct.quantity += quantity;
+    await existingProduct.save();
+    return res.status(200).json({
+      success: true,
+      message: 'Product quantity updated in cart',
+      data: existingProduct,
+    });
   }
 
   const newCartProduct = new CartProductModel({
-    email, productId, productprice, productimage, productName, productType, productModel, quantity
+    email,
+    productId,
+    productprice,
+    productimage,
+    productName,
+    productType,
+    productModel,
+    quantity,
   });
 
   await newCartProduct.save();
-  res.status(201).json({ success: true, message: 'Product added to cart', data: newCartProduct });
+  res.status(201).json({
+    success: true,
+    message: 'Product added to cart',
+    data: newCartProduct,
+  });
+
 
 };
+
+
+
+
+
+
+
 
 const updateProductInMyCart = async (req: Request, res: Response) => {
 

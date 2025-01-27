@@ -38,7 +38,7 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
 
 router.get('/usersgetall', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const users = await userControllers.getAllUsers(); // Assuming you have a method to fetch all users
+        const users = await userControllers.getAllUsers();
         res.status(200).json({
             success: true,
             message: 'Users fetched successfully',
@@ -49,8 +49,6 @@ router.get('/usersgetall', async (req: Request, res: Response, next: NextFunctio
         next(err);
     }
 });
-
-
 
 router.post('/auth/register', async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -82,6 +80,22 @@ router.post('/auth/login', async (req: Request, res: Response, next: NextFunctio
     }
 });
 
+router.patch('/users/:id', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const { currentPassword, newPassword } = req.body;
+
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({ message: 'Current password and new password are required' });
+        }
+
+        const updateStatus = await userControllers.updatePassword(id, currentPassword, newPassword);
+        res.status(updateStatus.statusCode).json(updateStatus);
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.patch('/admin/users/:userId/block', isAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { userId } = req.params;
@@ -91,6 +105,7 @@ router.patch('/admin/users/:userId/block', isAdmin, async (req: Request, res: Re
         next(err);
     }
 });
+
 router.patch('/admin/users/:userId/unblock', isAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { userId } = req.params;
